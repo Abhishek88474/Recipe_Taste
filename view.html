@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Recipe</title>
+  
+  <style>
+    body{
+       background: linear-gradient(to left, #8e72ac, #2575fc);
+    }
+    .container{
+      padding: 30px;
+      margin-left: 30px;
+       background: linear-gradient(to right, #8e72ac, #2575fc);
+      
+    }
+  </style>
+</head>
+<body>
+  <div class="container" style="max-width: 800px; margin: 50px auto;">
+    <div id="recipeView" class="card"></div>
+  </div>
+
+  <script>
+    const recipe = JSON.parse(localStorage.getItem("selectedRecipe"));
+
+    if (!recipe) {
+      document.getElementById("recipeView").innerHTML = "<p>No recipe selected.</p>";
+    } else {
+      document.getElementById("recipeView").innerHTML = `
+        <img src="${recipe.cardImage}" class="card-img-top" alt="${recipe.cardTitle}">
+        <div class="card-body">
+          <h2>${recipe.cardTitle}</h2>
+          <p><strong>Category:</strong> ${recipe.category}</p>
+          <p><strong>Description:</strong> ${recipe.cardText}</p>
+          <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
+          <p><strong>Procedure:</strong><br>${recipe.procedure.replaceAll('\\n', '<br>')}</p>
+          <a href="1home.html" class="btn btn-secondary mt-3">Back Home</a>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

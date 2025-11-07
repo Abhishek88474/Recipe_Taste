@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Signup</title>
+  <link rel="stylesheet" href="recipe.css" />
+</head>
+<body>
+  <form class="login" onsubmit="signup(event)">
+    <h2>Signup</h2>
+    <label>Username:</label>
+    <input type="text" id="signupName" required><br>
+    <label>Password:</label>
+    <input type="password" id="signupPass" required><br>
+    <button type="submit">Signup</button>
+    <p>Already have an account? <a href="recipe.html">Login</a></p>
+  </form>
+
+  <script>
+    function signup(event) {
+      event.preventDefault();
+      const name = document.getElementById("signupName").value.trim();
+      const pass = document.getElementById("signupPass").value;
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      users.push({ username: name, password: pass });
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("Signup successful. Please log in.");
+      window.location.href = "recipe.html";
+    }
+  </script>
+</body>
+</html>

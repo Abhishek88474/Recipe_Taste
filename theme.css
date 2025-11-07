@@ -1,0 +1,92 @@
+:root {
+  --primary: #2d6cdf;
+  --secondary: #f8f9fa;
+  --accent: #f5f5f5;
+  --text-dark: #222;
+  --text-light: #fff;
+  --border-radius: 12px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  background: linear-gradient(to right, #8e72ac, #2575fc);
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--text-light);
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.btn {
+  border-radius: var(--border-radius);
+  
+}
+
+.card {
+  border: none;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-body {
+  background-color: var(--accent);
+  color: var(--text-dark);
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+input, textarea {
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+form {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: white;
+  color: black;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+.carousel-item img {
+  object-fit: cover;
+  height: 400px;
+}
+
+.line {
+  text-align: center;
+  font-size: 24px;
+  padding: 40px 20px;
+  font-weight: 500;
+}
+
+#recipeContainer {
+  padding-bottom: 50px;
+  
+}
+ footer {
+      background-color: #1f1f1f;
+      color: #ccc;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 3rem;
+      font-size: medium;
+ }
+      
+ 
+    
+
+

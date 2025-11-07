@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Recipe</title>
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+  <form id="addRecipeForm">
+    <h2 style="text-align:center;">Add a New Recipe</h2>
+    
+    <input type="text" id="recipeTitle" placeholder="Title" required><br><br>
+    <input type="text" id="recipeCategory" placeholder="Category" required><br><br>
+    <textarea id="recipeDesc" placeholder="Short description..." required></textarea><br><br>
+    <textarea id="recipeIngredients" placeholder="Ingredients (comma-separated)" required></textarea><br><br>
+    <textarea id="recipeProcedure" placeholder="Procedure (step-by-step)" required></textarea><br><br>
+    <input type="text" id="recipeImage" placeholder="Image URL or image/default.jpg"><br><br>
+    
+    <button type="submit">Add Recipe</button>
+  </form>
+
+ <script>// 🔒 Check if user is logged in or not
+if (!localStorage.getItem("loggedInUser")) {
+  alert("You must be logged in to add recipes."); // Agar login nahi hai to alert show karega
+  window.location.href = "recipe.html"; // User ko login page par bhej dega
+}
+
+// ✏️ Check if user is editing a recipe
+const editData = JSON.parse(localStorage.getItem("editRecipe"));
+if (editData) {
+  // Agar edit mode me hai to purani values form me bhar de
+  document.getElementById("recipeTitle").value = editData.cardTitle;
+  document.getElementById("recipeCategory").value = editData.category;
+  document.getElementById("recipeDesc").value = editData.cardText;
+  document.getElementById("recipeIngredients").value = editData.ingredients;
+  document.getElementById("recipeProcedure").value = editData.procedure;
+  document.getElementById("recipeImage").value = editData.cardImage;
+}
+
+// 🧾 Form submit hone par event listener lagana
+document.getElementById("addRecipeForm").addEventListener("submit", function(e) {
+  e.preventDefault(); // Page reload hone se rokta hai
+
+  // 🎯 Form ke input fields se values lena
+  const title = document.getElementById("recipeTitle").value;
+  const category = document.getElementById("recipeCategory").value;
+  const desc = document.getElementById("recipeDesc").value;
+  const ingredients = document.getElementById("recipeIngredients").value;
+  const procedure = document.getElementById("recipeProcedure").value;
+  const image = document.getElementById("recipeImage").value || "default.jpg"; // Agar image nahi di ho to default
+
+  // 🍳 Recipe object banana
+  const newRecipe = {
+    cardTitle: title,
+    category: category,
+    cardText: desc,
+    ingredients: ingredients,
+    procedure: procedure,
+    cardImage: image
+  };
+
+  // 📦 Pehle se saved recipes localStorage se lena
+  let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
+
+  // ✍️ Check karna ki edit kar rahe hain ya new recipe add kar rahe hain
+  if (editData && typeof editData.index === 'number') {
+    recipes[editData.index] = newRecipe; // Purani recipe update karo
+    localStorage.removeItem("editRecipe"); // Edit mode hatado
+  } else {
+    recipes.push(newRecipe); // Nayi recipe list me add karo
+  }
+
+  // 💾 Recipes ko localStorage me save karna
+  localStorage.setItem("recipes", JSON.stringify(recipes));
+
+  alert("Recipe saved!"); // Success message
+  window.location.href = "1home.html"; // Home page par redirect
+});
+
+</script>
+
+  
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="recipe.css" />
+</head>
+<body>
+  <form class="login" onsubmit="login(event)">
+    <h2>Login</h2>
+    <label>Username:</label>
+    <input type="text" id="logName" required><br>
+    <label>Password:</label>
+    <input type="password" id="logPass" required><br>
+    <button type="submit">Login</button>
+    <p>Don't have an account? <a href="signup.html">Signup</a></p>
+  </form>
+
+  <script>
+    function login(event) {
+      event.preventDefault();
+      const name = document.getElementById("logName").value.trim();
+      const pass = document.getElementById("logPass").value;
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const matched = users.find(u => u.username === name && u.password === pass);
+      if (matched) {
+        localStorage.setItem("loggedInUser", name);
+        alert("Login successful!");
+        window.location.href = "1home.html";
+      } else {
+        alert("Invalid credentials.");
+      }
+    }
+  </script>
+</body>
+</html>
