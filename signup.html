@@ -2,30 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Signup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup - Recipe Taste</title>
   <link rel="stylesheet" href="recipe.css" />
 </head>
 <body>
   <form class="login" onsubmit="signup(event)">
     <h2>Signup</h2>
-    <label>Username:</label>
-    <input type="text" id="signupName" required><br>
-    <label>Password:</label>
-    <input type="password" id="signupPass" required><br>
+
+    <label for="signupName">Username:</label>
+    <input type="text" id="signupName" required />
+
+    <label for="signupPass">Password:</label>
+    <input type="password" id="signupPass" required />
+
     <button type="submit">Signup</button>
+
     <p>Already have an account? <a href="recipe.html">Login</a></p>
+
+    <div id="signupMsg" class="msg"></div>
   </form>
 
   <script>
+    function showMessage(text, type = "error") {
+      const el = document.getElementById("signupMsg");
+      el.textContent = text;
+      el.className = "msg " + (type === "success" ? "success" : "error");
+    }
+
     function signup(event) {
       event.preventDefault();
+
       const name = document.getElementById("signupName").value.trim();
       const pass = document.getElementById("signupPass").value;
+
+      if (!name || !pass) {
+        alert("Please fill in both fields!");
+        showMessage("Please fill in both fields.", "error");
+        return;
+      }
+
       let users = JSON.parse(localStorage.getItem("users")) || [];
+      const exists = users.some(u => u.username === name);
+
+      if (exists) {
+        alert("Username already exists! Please choose another.");
+        showMessage("Username already exists. Try another one.", "error");
+        return;
+      }
+
+      // Save new user
       users.push({ username: name, password: pass });
       localStorage.setItem("users", JSON.stringify(users));
-      alert("Signup successful. Please log in.");
-      window.location.href = "recipe.html";
+
+      // Success alert + message
+      alert("✅ Signup successful! Please log in.");
+      showMessage("Signup successful! Redirecting to login...", "success");
+
+      // Redirect to login page after short delay
+      setTimeout(() => {
+        window.location.href = "recipe.html";
+      }, 800);
     }
   </script>
 </body>
