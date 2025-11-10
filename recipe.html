@@ -1,34 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Recipe Taste</title>
+  <!-- Link to the CSS you provided -->
   <link rel="stylesheet" href="recipe.css" />
 </head>
 <body>
   <form class="login" onsubmit="login(event)">
     <h2>Login</h2>
-    <label>Username:</label>
-    <input type="text" id="logName" required><br>
-    <label>Password:</label>
-    <input type="password" id="logPass" required><br>
+
+    <label for="logName">Username:</label>
+    <input type="text" id="logName" required />
+
+    <label for="logPass">Password:</label>
+    <input type="password" id="logPass" required />
+
     <button type="submit">Login</button>
+
     <p>Don't have an account? <a href="signup.html">Signup</a></p>
+
+    <div id="loginMsg" class="msg"></div>
   </form>
 
   <script>
+    function showMessage(text, type = "error") {
+      const el = document.getElementById("loginMsg");
+      el.textContent = text;
+      el.className = "msg " + (type === "success" ? "success" : "error");
+    }
+
     function login(event) {
       event.preventDefault();
-      const name = document.getElementById("logName").value.trim();
-      const pass = document.getElementById("logPass").value;
+
+      const nameInput = document.getElementById("logName");
+      const passInput = document.getElementById("logPass");
+
+      const name = nameInput.value.trim();
+      const pass = passInput.value;
+
+      if (!name || !pass) {
+        showMessage("Please enter username and password.", "error");
+        return;
+      }
+
+      // users stored as [{ username, password }, ...]
       const users = JSON.parse(localStorage.getItem("users")) || [];
+
       const matched = users.find(u => u.username === name && u.password === pass);
+
       if (matched) {
+        // Save logged in user (you can save more info if needed)
         localStorage.setItem("loggedInUser", name);
-        alert("Login successful!");
-        window.location.href = "index.html";
+
+        showMessage("Login successful! Redirecting...", "success");
+
+        // brief delay so user sees the message
+        setTimeout(() => {
+          // Redirect to home (you used 1home.html earlier)
+          window.location.href = "1home.html";
+        }, 700);
       } else {
-        alert("Invalid credentials.");
+        showMessage("Invalid credentials. Check username/password or signup first.", "error");
       }
     }
   </script>
